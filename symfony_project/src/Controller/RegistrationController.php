@@ -14,6 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
+
+use App\Entity\LinuxCredentials;
+use App\Entity\FtpCredentials;
+use App\Entity\MysqlCredentials;
+use App\Entity\SshCredentials;
+
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
@@ -31,6 +37,18 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            // we need to create a folder with the user's email address prefix
+            $email_prefix = explode("@", $user->getEmail())[0];
+
+            // create a linux user into the serv with the same name as the email prefix and a random password
+            $password = bin2hex(random_bytes(4));
+
+
+
+
+
+
 
             $entityManager->persist($user);
             $entityManager->flush();

@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?MysqlCredentials $mysqlCredentials = null;
 
+    #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
+    private ?LinuxCredentials $linuxCredentials = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -186,6 +189,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->mysqlCredentials = $mysqlCredentials;
+
+        return $this;
+    }
+
+    public function getLinuxCredentials(): ?LinuxCredentials
+    {
+        return $this->linuxCredentials;
+    }
+
+    public function setLinuxCredentials(LinuxCredentials $linuxCredentials): self
+    {
+        // set the owning side of the relation if necessary
+        if ($linuxCredentials->getUser() !== $this) {
+            $linuxCredentials->setUser($this);
+        }
+
+        $this->linuxCredentials = $linuxCredentials;
 
         return $this;
     }
