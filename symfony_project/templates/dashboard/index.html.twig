@@ -1,17 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}GoofyFly - Dashboard{% endblock %}
 
 {% block body %}
 
+<header class="w-screen h-[8vh] flex justify-between align-middle items-center px-6 bg-[#2C2C2C]">
+    <h1 class="text-3xl font-extrabold my-auto">GoofyFly - Dashboard</h1>
+    
+    <button class="group rounded-xl bg-white font-bold text-lg text-black relative overflow-hidden my-auto px-4 py-2">
+        LOGOUT
+        <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+    </button>
+</header>
+<article class="h-[92vh] p-4">
+<div class="flex flex-col align-middle items-center">
 
-<div class="example-wrapper">
-    <h1  class="text-3xl font-bold underline" >Hello {{ controller_name }}! ✅</h1>
+    <div class="flex justify-around w-full my-6">
+        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+            <div class="flex justify-around w-full items-center">
+                <i class="fa-solid fa-hard-drive fa-8x"></i>
+                <p class="text-4xl font-medium">Disk usage</p>
+            </div>
+            <div class="flex justify-center w-full">
+                <p class="text-2xl font-extrabold"><span class="text-9xl ">12</span>/40Mb</p>
+            </div>
+        </div>
+        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+            <div class="flex justify-around w-full items-center">
+                <i class="fa-solid fa-database fa-8x"></i>
+                <p class="text-4xl font-medium">Database size</p>
+            </div>
+            <div class="flex justify-center w-full">
+                <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>/40Mb</p>
+            </div>
+        </div>
+        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+            <div class="flex justify-around w-full items-center">
+                <i class="fa-solid fa-floppy-disk fa-8x"></i>
+                <p class="text-4xl font-medium">Backups</p>
+            </div>
+            <div class="flex justify-center w-full">
+                <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>Saves</p>
+            </div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/tiplo/Github/GoofyFly/symfony_project/src/Controller/DashboardController.php'|file_link(0) }}">src/Controller/DashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/tiplo/Github/GoofyFly/symfony_project/templates/dashboard/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
-    </ul>
+    <div class="flex justify-around w-full my-6">
+        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+            <div class="flex justify-around w-full items-center">
+                <i class="fa-solid fa-network-wired fa-6x"></i>
+                <p class="text-4xl font-medium">SSH Infos</p>
+            </div>
+            <div class="flex justify-center w-full">
+                <p class="text-2xl font-extrabold"><span class="text-9xl ">12</span>/40Mb</p>
+            </div>
+        </div>
+        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+            <div class="flex justify-around w-full items-center">
+                <i class="fa-solid fa-network-wired fa-6x"></i>
+                <p class="text-4xl font-medium">FTP Infos</p>
+            </div>
+            <div class="flex justify-center w-full">
+                <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>/40Mb</p>
+            </div>
+        </div>
+    </div>
+    
 </div>
+</article>
 {% endblock %}
