@@ -7,7 +7,7 @@ services:
             dockerfile: ./symfony_config/Dockerfile
         restart: on-failure
         ports:
-            - "8000:80"
+            - "80:80"
         volumes:
             - ./symfony_config/site.conf:/etc/nginx/http.d/default.conf
             - ./symfony_project:/var/www/html
