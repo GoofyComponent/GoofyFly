@@ -36,6 +36,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
+    #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
+    private ?FtpCredentials $ftpCredentials = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?SshCredentials $sshCredentials = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?MysqlCredentials $mysqlCredentials = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +135,57 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFtpCredentials(): ?FtpCredentials
+    {
+        return $this->ftpCredentials;
+    }
+
+    public function setFtpCredentials(FtpCredentials $ftpCredentials): self
+    {
+        // set the owning side of the relation if necessary
+        if ($ftpCredentials->getUser() !== $this) {
+            $ftpCredentials->setUser($this);
+        }
+
+        $this->ftpCredentials = $ftpCredentials;
+
+        return $this;
+    }
+
+    public function getSshCredentials(): ?SshCredentials
+    {
+        return $this->sshCredentials;
+    }
+
+    public function setSshCredentials(SshCredentials $sshCredentials): self
+    {
+        // set the owning side of the relation if necessary
+        if ($sshCredentials->getUser() !== $this) {
+            $sshCredentials->setUser($this);
+        }
+
+        $this->sshCredentials = $sshCredentials;
+
+        return $this;
+    }
+
+    public function getMysqlCredentials(): ?MysqlCredentials
+    {
+        return $this->mysqlCredentials;
+    }
+
+    public function setMysqlCredentials(MysqlCredentials $mysqlCredentials): self
+    {
+        // set the owning side of the relation if necessary
+        if ($mysqlCredentials->getUser() !== $this) {
+            $mysqlCredentials->setUser($this);
+        }
+
+        $this->mysqlCredentials = $mysqlCredentials;
 
         return $this;
     }
