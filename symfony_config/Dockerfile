@@ -22,6 +22,12 @@ RUN apk add --no-cache libjpeg-turbo-dev && \
 RUN apk add --no-cache nodejs npm
 
 
+# Install ssh 
+RUN apk add --no-cache openssh-client
+
+# SFTP  
+RUN apk add --no-cache openssh-server
+
 
 # php-fpm and alpine permissions are a pain for symfony 
 # Update www-data user to give him all permissions
