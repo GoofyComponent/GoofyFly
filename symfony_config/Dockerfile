@@ -18,17 +18,10 @@ RUN apk add --no-cache libjpeg-turbo-dev && \
     docker-php-ext-install -j$(nproc) gd
 
 
-# Install python3
-RUN apk add --no-cache python3
+# Install node and npm
+RUN apk add --no-cache nodejs npm
 
-# Install pip
-RUN python3 -m ensurepip
-RUN pip3 install --upgrade pip setuptools
 
-# install mysql-connector-python     
-RUN pip install mysql-connector-python
-
-RUN pip install requests
 
 # php-fpm and alpine permissions are a pain for symfony 
 # Update www-data user to give him all permissions
