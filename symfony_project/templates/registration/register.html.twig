@@ -3,17 +3,36 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <article class="md:w-5/12 px-6">
+        <h1 class="text-6xl font-extrabold">GoofyFly</h1>
+        <h2 class="text-4xl font-medium">Hosting never been this easy</h2>
+    </article>
+    <article class="px-6 h-screen flex flex-col justify-center bg-[#2C2C2C] md:w-6/12 md:rounded-tl-3xl md:rounded-bl-3xl">
+        {{ form_start(registrationForm) }}
+            <label for="email" class="block mb-2 mt-2 text-lg font-medium text-white">Your email</label>
+            {{ form_row(registrationForm.email, {'attr': {'class':'bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5'}}) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            <label for="firstname" class="block mb-2 mt-2 text-lg font-medium text-white">Your firstname</label>
+            {{ form_row(registrationForm.firstname, {'attr': {'class':'bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5'}}) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <label for="lastname" class="block mb-2 mt-2 text-lg font-medium text-white">Your lastname</label>
+            {{ form_row(registrationForm.lastname, {'attr': {'class':'bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5'}}) }}
+
+            <label for="plainPassword" class="block mb-2 mt-2 text-lg font-medium text-white">Your password</label>
+            {{ form_row(registrationForm.plainPassword, {'attr': {'class':'bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5'}}) }}
+
+            <div class="flex justify-between w-7/12 mt-2">
+                <label for="agreeTerms" class="block mb-2 text-lg font-medium text-white">Please accept the terms and conditions</label>
+                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
+
+            <button type="submit" class="group rounded-2xl bg-white font-bold text-lg text-black relative overflow-hidden ml-auto mr-0 mt-4 px-4 py-2">
+                REGISTER
+                <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+            </button>
+        {{ form_end(registrationForm) }}
+    </article>
+
+    
 {% endblock %}
+

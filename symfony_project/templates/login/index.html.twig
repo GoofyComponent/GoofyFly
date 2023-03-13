@@ -8,16 +8,26 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+    <article class="md:w-5/12 px-6">
+        <h1 class="text-6xl font-extrabold">GoofyFly</h1>
+        <h2 class="text-4xl font-medium">Hosting never been this easy</h2>
+    </article>
+    <article class="px-6 h-screen flex flex-col justify-center bg-[#2C2C2C] md:w-6/12 md:rounded-tl-3xl md:rounded-bl-3xl">
+        <form action="{{ path('app_login') }}" method="post" class="flex mx-auto flex-col justify-center w-8/12">
+            <label for="username" class="block mb-2 text-lg font-medium text-white">Your email</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" class="bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5" placeholder="johndoe@goofyfly.org">
+            
+            <label for="password" class="block mb-2 text-lg font-medium text-white">Password</label>
+            <input type="password" id="password" name="_password" value="{{ last_username }}" class="bg-white border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <input type="hidden" name="_target_path" value="{{ path('app_dashboard') }}">
+            <input type="hidden" name="_target_path" value="{{ path('app_dashboard') }}">
 
-        <button type="submit">login</button>
-    </form>
+            <button type="submit" class="group rounded-2xl bg-white font-bold text-lg text-black relative overflow-hidden ml-auto mr-0 mt-4 px-4 py-2">
+                LOGIN
+                <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
+            </button>
+        </form>
+    </article>
 {% endblock %}
