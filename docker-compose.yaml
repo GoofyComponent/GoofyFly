@@ -1,74 +1,49 @@
 version: "3.8"
 
 services:
-    alpine:
-        build:
-            context: .
-            dockerfile: ./symfony_config/Dockerfile
-        restart: on-failure
-        ports:
-            - "80:80"
-        volumes:
-            - ./symfony_config/site.conf:/etc/nginx/http.d/default.conf
-            - ./symfony_project:/var/www/html
-        networks:
-            - dev
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
+  alpine:
+    container_name: alpine
+    build:
+      context: .
+      dockerfile: ./symfony_config/Dockerfile
+    restart: on-failure
+    ports:
+      - "80:80"
+    volumes:
+      - ./symfony_config/site.conf:/etc/nginx/http.d/default.conf
+      - ./symfony_project:/var/www/html
+    networks:
+      - dev
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
-    db:
-        image: 'mariadb:10.3'
-        restart: on-failure
-        volumes:
-            - db-data:/var/lib/mysql
-        environment:
-            MYSQL_DATABASE: data
-            MYSQL_USER: root
-            MYSQL_ROOT_PASSWORD: password
-        networks:
-            - dev
-        # ports:
-        #     - "3307:3306"
+  db:
+    container_name: db
+    image: "mariadb:10.3"
+    restart: on-failure
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: data
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - dev
 
-    phpmyadmin:
-        image: phpmyadmin:latest
-        restart: on-failure
-        depends_on:
-            - db
-        ports:
-            - "1234:80"
-        environment:
-            PMA_HOST: db
-        networks:
-            - dev
-
-  # caddy:
-  #   image: dunglas/mercure
-  #   restart: on-failure
-  #   container_name: mercure_docker
-  #   environment:
-  #     # Uncomment the following line to disable HTTPS
-  #     SERVER_NAME: ":80"
-  #     MERCURE_PUBLISHER_JWT_KEY: "!ChangeThisMercureSecretKeyWithAKeyGreaterThan256Bits!"
-  #     MERCURE_SUBSCRIBER_JWT_KEY: "!ChangeThisMercureSecretKeyWithAKeyGreaterThan256Bits!"
-  #     MERCURE_EXTRA_DIRECTIVES:
-  #       cors_origins "*"
-  #   # Uncomment the following line to enable the development mode
-  #   command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
-  #   ports:
-  #     - "9090:80"
-  #     - "443:443"
-  #   #        volumes:
-  #   #            - caddy_data:/data
-  #   #            - caddy_config:/config
-  #   networks:
-  #     - dev
-
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    restart: on-failure
+    depends_on:
+      - db
+    ports:
+      - "1234:80"
+    environment:
+      PMA_HOST: db
+    networks:
+      - dev
 networks:
   dev:
 
-
 volumes:
   db-data:
-#    caddy_data:
-#    caddy_config:

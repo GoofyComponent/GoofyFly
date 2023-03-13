@@ -2,7 +2,7 @@
 
 docker compose up -d
 
-docker exec -it goofyfly-alpine-1 bash
+docker exec -it alpine bash
 
 composer install
 
