@@ -23,6 +23,9 @@ class LinuxCredentials
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
 
+    #[ORM\Column]
+    private ?int $port = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class LinuxCredentials
     public function setUser(User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getPort(): ?int
+    {
+        return $this->port;
+    }
+
+    public function setPort(int $port): self
+    {
+        $this->port = $port;
 
         return $this;
     }

@@ -50,6 +50,8 @@ RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 RUN chown -R www-data:www-data /var/www/html
 
+RUN apt-get install -y systemd
+
 WORKDIR /var/www/html
 
 # cmd nginx and php-fpm
