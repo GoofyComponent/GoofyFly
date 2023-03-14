@@ -12,11 +12,30 @@
         <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl"></div>
     </button>
 </header>
-<article class="h-[92vh] p-4">
-<div class="flex flex-col align-middle items-center">
+<article class="h-[92vh] p-4 flex flex-col justify-center">
+<div class="flex flex-col align-middle items-center my-auto">
 
     <div class="flex justify-around w-full my-6">
-        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+        <div class="w-full min-w-[60em] bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2 min-h-[25em]">
+            <div class="flex justify-between h-full">
+                <div class="border-r border-white w-1/2 p-2">
+                    <div class="flex justify-start items-center">
+                        <i class="fa-solid fa-circle-info fa-2xl"></i>
+                        <p class="text-4xl font-medium ml-2">Infos</p>
+                    </div>
+                </div>
+                <div class="w-1/2 p-2">
+                    <div class="flex justify-start items-center">
+                        <i class="fa-solid fa-eye fa-2xl"></i>
+                        <p class="text-4xl font-medium ml-2">Secrets</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-around w-full my-6">
+        <div class="w-1/4 min-w-[20em] bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
             <div class="flex justify-around w-full items-center">
                 <i class="fa-solid fa-hard-drive fa-8x"></i>
                 <p class="text-4xl font-medium">Disk usage</p>
@@ -25,7 +44,7 @@
                 <p class="text-2xl font-extrabold"><span class="text-9xl ">12</span>/40Mb</p>
             </div>
         </div>
-        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+        <div class="w-1/4 min-w-[20em] bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
             <div class="flex justify-around w-full items-center">
                 <i class="fa-solid fa-database fa-8x"></i>
                 <p class="text-4xl font-medium">Database size</p>
@@ -34,34 +53,13 @@
                 <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>/40Mb</p>
             </div>
         </div>
-        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
+        <div class="w-1/4 min-w-[20em] bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
             <div class="flex justify-around w-full items-center">
                 <i class="fa-solid fa-floppy-disk fa-8x"></i>
                 <p class="text-4xl font-medium">Backups</p>
             </div>
             <div class="flex justify-center w-full">
                 <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>Saves</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="flex justify-around w-full my-6">
-        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
-            <div class="flex justify-around w-full items-center">
-                <i class="fa-solid fa-network-wired fa-6x"></i>
-                <p class="text-4xl font-medium">SSH Infos</p>
-            </div>
-            <div class="flex justify-center w-full">
-                <p class="text-2xl font-extrabold"><span class="text-9xl ">12</span>/40Mb</p>
-            </div>
-        </div>
-        <div class="w-1/4 bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2">
-            <div class="flex justify-around w-full items-center">
-                <i class="fa-solid fa-network-wired fa-6x"></i>
-                <p class="text-4xl font-medium">FTP Infos</p>
-            </div>
-            <div class="flex justify-center w-full">
-                <p class="text-2xl font-extrabold"><span class="text-9xl">12</span>/40Mb</p>
             </div>
         </div>
     </div>
