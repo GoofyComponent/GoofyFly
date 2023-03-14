@@ -70,20 +70,16 @@ class RegistrationController extends AbstractController
                 throw new ProcessFailedException($process);
             }
 
-            // on lui laisse accèder que à son dossier personnel
+            //  change default shell folder to /home/user
             $process = new Process(['sudo', 'usermod', '-d', '/home/' . $email_prefix, $email_prefix]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
-
             // End of process
-
-
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_dashboard');
         }
