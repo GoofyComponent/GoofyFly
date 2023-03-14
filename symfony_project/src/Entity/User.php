@@ -36,9 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
-    #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
-    private ?FtpCredentials $ftpCredentials = null;
-
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?SshCredentials $sshCredentials = null;
 

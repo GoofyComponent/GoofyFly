@@ -16,9 +16,6 @@ use Symfony\Component\Process\Process;
 
 
 use App\Entity\LinuxCredentials;
-use App\Entity\FtpCredentials;
-use App\Entity\MysqlCredentials;
-use App\Entity\SshCredentials;
 
 class RegistrationController extends AbstractController
 {
@@ -38,15 +35,49 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // we need to create a folder with the user's email address prefix
             $email_prefix = explode("@", $user->getEmail())[0];
+            $random_password = bin2hex(random_bytes(8));
+            $LinuxCredentials = new LinuxCredentials();
+            $LinuxCredentials->setUsername($email_prefix);
+            $LinuxCredentials->setPassword($random_password);
+            $user->setLinuxCredentials($LinuxCredentials);
 
-            // create a linux user into the serv with the same name as the email prefix and a random password
-            $password = bin2hex(random_bytes(4));
+            // Process to create user
 
+                // Create user with random password
+            $process = new Process(['sudo', 'useradd', $email_prefix, '-p', $random_password]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            
+                // créer le dossier de l'utilisateur
+            $process = new Process(['sudo', 'mkdir', '/home/' . $email_prefix]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+                // changer le propriétaire du dossier de l'utilisateur
+            $process = new Process(['sudo', 'chown', $email_prefix . ':' . $email_prefix, '/home/' . $email_prefix]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+                // changer les droits du dossier de l'utilisateur
+            $process = new Process(['sudo', 'chmod', '700', '/home/' . $email_prefix]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
 
+            // on lui laisse accèder que à son dossier personnel
+            $process = new Process(['sudo', 'usermod', '-d', '/home/' . $email_prefix, $email_prefix]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
 
-
+            // End of process
 
 
 
