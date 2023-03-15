@@ -37,7 +37,7 @@ services:
     depends_on:
       - db
     ports:
-      - "1234:80"
+      - "7777:80"
     environment:
       PMA_HOST: db
     networks:
