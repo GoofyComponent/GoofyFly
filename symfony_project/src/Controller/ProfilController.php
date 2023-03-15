@@ -37,6 +37,22 @@ class ProfilController extends AbstractController
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+
+        // del mysql user and database
+        $process = new Process(['sudo', 'mysql', '-e', 'DROP DATABASE ' . $email_prefix]);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $process = new Process(['sudo', 'mysql', '-e', 'DROP USER ' . $email_prefix . '@localhost']);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+
+
         // End of process
 
         // Delete the user in the database

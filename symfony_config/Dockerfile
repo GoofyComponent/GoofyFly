@@ -4,9 +4,9 @@ FROM php:8.1.2-fpm
 
 
 RUN apt-get update && apt-get install -y \
-openssl nginx bash git nano libicu-dev libzip-dev cron libxml2-dev libpng-dev libxslt-dev libonig-dev \
-&& curl -sS https://getcomposer.org/installer | php -- \
-&& mv composer.phar /usr/local/bin/composer 
+    openssl nginx bash git nano libicu-dev libzip-dev cron libxml2-dev libpng-dev libxslt-dev libonig-dev \
+    && curl -sS https://getcomposer.org/installer | php -- \
+    && mv composer.phar /usr/local/bin/composer 
 
 RUN apt-get install -y sudo
 #php-fpm permissions are a pain for symfony
@@ -18,7 +18,7 @@ RUN sed -i 's/www-data:x:82:/www-data:x:1000:/g' /etc/group
 RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash \
-&& sudo apt install symfony-cli
+    && sudo apt install symfony-cli
 
 
 RUN docker-php-ext-configure intl
@@ -50,9 +50,14 @@ RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 RUN chown -R www-data:www-data /var/www/html
 
-RUN apt-get install -y systemd
+
+#install mariadb
+RUN sudo apt-get install -y mariadb-server mariadb-client
+
+RUN sudo apt install net-tools
+
 
 WORKDIR /var/www/html
 
 # cmd nginx and php-fpm
-CMD service nginx start && php-fpm
+CMD nginx && php-fpm && service mariadb start && tail -f /dev/null

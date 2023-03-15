@@ -75,7 +75,7 @@ class RegistrationController extends AbstractController
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
-            
+
             // créer le dossier de l'utilisateur
             $process = new Process(['sudo', 'mkdir', '/home/' . $email_prefix]);
             $process->run();
@@ -108,6 +108,33 @@ class RegistrationController extends AbstractController
             $MysqlCredentials->setUsername($email_prefix);
             $MysqlCredentials->setPassword($random_password);
             $user->setMysqlCredentials($MysqlCredentials);
+
+            // connect to db with mysql -u root -p'password' -h db
+            // create a user with the same name as the email prefix
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'CREATE USER "' . $email_prefix . '"@"%" IDENTIFIED BY "' . $random_password . '";']);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            // create a database with the same name as the email prefix
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'CREATE DATABASE ' . $email_prefix . ';']);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            // give the user all the privileges on the database
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'GRANT ALL PRIVILEGES ON ' . $email_prefix . '.* TO "' . $email_prefix . '"@"%";']);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            // flush privileges
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'FLUSH PRIVILEGES;']);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+
 
             // End of process
 
