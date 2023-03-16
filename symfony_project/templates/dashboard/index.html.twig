@@ -4,10 +4,8 @@
 
 {% block body %}
 
-{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-{{ app.request.uri }} - 1
-{{ app.request.pathinfo }} - 2 
-{{ app.request.requesturi }} - 3
+{% set currentPath = app.request.schemeAndHttpHost|replace({'http://': '', 'https://': '', 'www.': ''})|split('/')|first %}
+
 <header class="w-screen h-[8vh] flex justify-between align-middle items-center px-6 bg-[#2C2C2C]">
     <h1 class="text-3xl font-extrabold my-auto">GoofyFly - Dashboard</h1>
 
