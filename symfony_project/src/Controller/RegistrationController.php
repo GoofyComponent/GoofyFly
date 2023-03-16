@@ -58,16 +58,8 @@ class RegistrationController extends AbstractController
             }
 
             // Définition du mot de passe pour le nouvel utilisateur
-            $process = new Process(['sudo', 'echo', sprintf('%s:%s', $username, $password), '|', 'sudo', 'chpasswd']);
-            $process->run();
-
-            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
-            if (!$process->isSuccessful()) {
-                throw new \RuntimeException($process->getErrorOutput());
-            }
-
-            //Ajout au ssh
-            $process = new Process(['sudo', 'usermod', '-aG', 'sshd', $username]);
+            $combo = $username . ':' . $password;
+            $process = new Process(['sudo', 'echo', $combo , '|', 'sudo', 'chpasswd']);
             $process->run();
 
             // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
