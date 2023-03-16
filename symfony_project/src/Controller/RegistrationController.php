@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
 
             $username = $email_prefix;
             $password = $random_password;
-            $sudoPassword = 'hetic2023groupe10AIR!';
+            /* $sudoPassword = 'hetic2023groupe10AIR!';
 
             // Exécution de la commande adduser avec les paramètres appropriés
             $process = new Process(['sudo', '-S', 'adduser', '--gecos', '', $username]);
@@ -71,6 +71,24 @@ class RegistrationController extends AbstractController
             // Définition du mot de passe pour le nouvel utilisateur
             $process = new Process(['sudo', '-S', 'echo', sprintf('%s:%s', $username, $password), '|', 'sudo', '-S', 'chpasswd']);
             $process->setInput($sudoPassword . "\n");
+            $process->run();
+
+            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            } */
+
+            // Exécution de la commande adduser avec les paramètres appropriés
+            $process = new Process(['sudo', 'adduser', '--gecos', '', $username]);
+            $process->run();
+
+            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }
+
+            // Définition du mot de passe pour le nouvel utilisateur
+            $process = new Process(['sudo', 'echo', sprintf('%s:%s', $username, $password), '|', 'sudo', 'chpasswd']);
             $process->run();
 
             // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
