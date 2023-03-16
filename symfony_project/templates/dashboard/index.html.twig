@@ -23,12 +23,36 @@
                         <i class="fa-solid fa-circle-info fa-2xl"></i>
                         <p class="text-4xl font-medium ml-2">Infos</p>
                     </div>
+
+                    <div class="flex flex-col">
+                        <p class="text-xl font-normal">SSH link:</p>
+                        <p class="text-xl font-normal">ssh {{username}}@{{domain_name}}</p>
+                    </div>  
+
+                    <div class="flex flex-col">
+                        <p class="text-xl font-normal">FTP:</p>
+                        <p class="text-xl font-normal">Credentials : See in the side box</p>
+                        <p class="text-xl font-normal">Link : ftp://{{domain_name}}</p>
+                        <p class="text-xl font-normal">Port : 22</p>
+                    </div>   
                 </div>
                 <div class="w-1/2 p-2">
                     <div class="flex justify-start items-center">
                         <i class="fa-solid fa-eye fa-2xl"></i>
                         <p class="text-4xl font-medium ml-2">Secrets</p>
                     </div>
+
+                    <div class="flex flex-col">
+                        <p class="text-xl font-normal">Username</p>
+                        <p class="text-xl font-normal">{{username}}</p>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <p class="text-xl font-normal">Password</p>
+                        <p class="text-xl font-normal">{{password}}</p>
+                    </div>
+
+                    <p>This credentials are used to connect to the SSH & FTP.</p>
                 </div>
             </div>
         </div>
