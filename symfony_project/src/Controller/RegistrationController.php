@@ -29,28 +29,6 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // on récupère la liste des ports utilisés dans un tableau php
-            $process = new Process(['sudo', 'netstat', '-tulpn']);
-            $process->run();
-            if (!$process->isSuccessful()) {
-                throw new ProcessFailedException($process);
-            }
-            $result = $process->getOutput();
-            // grab Local Address. it can also be :::XXXXX
-            preg_match_all('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}/', $result, $matches);
-            $ports = $matches[0];
-            array_push($ports, '0.0.0.0:9000', '0.0.0.0:3306');
-            // only keep the port number
-            $ports = array_map(function ($port) {
-                return explode(':', $port)[1];
-            }, $ports);
-            // encode the plain password
-
-            // get two random port that not used by any service
-            $web_port = rand(1024, 65535);
-            while (in_array($web_port, $ports)) {
-                $web_port = rand(1024, 65535);
-            }
 
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -64,7 +42,6 @@ class RegistrationController extends AbstractController
             $LinuxCredentials = new LinuxCredentials();
             $LinuxCredentials->setUsername($email_prefix);
             $LinuxCredentials->setPassword($random_password);
-            $LinuxCredentials->setPort($web_port);
             $user->setLinuxCredentials($LinuxCredentials);
 
             // Process to create user
@@ -111,25 +88,25 @@ class RegistrationController extends AbstractController
 
             // connect to db with mysql -u root -p'password' -h db
             // create a user with the same name as the email prefix
-            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'CREATE USER "' . $email_prefix . '"@"%" IDENTIFIED BY "' . $random_password . '";']);
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'CREATE USER "' . $email_prefix . '"@"%" IDENTIFIED BY "' . $random_password . '";']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
             // create a database with the same name as the email prefix
-            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'CREATE DATABASE ' . $email_prefix . ';']);
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'CREATE DATABASE ' . $email_prefix . ';']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
             // give the user all the privileges on the database
-            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'GRANT ALL PRIVILEGES ON ' . $email_prefix . '.* TO "' . $email_prefix . '"@"%";']);
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'GRANT ALL PRIVILEGES ON ' . $email_prefix . '.* TO "' . $email_prefix . '"@"%";']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
             // flush privileges
-            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'db', '-e', 'FLUSH PRIVILEGES;']);
+            $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'FLUSH PRIVILEGES;']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);

@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
-  
+
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?MysqlCredentials $mysqlCredentials = null;
 
@@ -136,39 +136,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFtpCredentials(): ?FtpCredentials
-    {
-        return $this->ftpCredentials;
-    }
-
-    public function setFtpCredentials(FtpCredentials $ftpCredentials): self
-    {
-        // set the owning side of the relation if necessary
-        if ($ftpCredentials->getUser() !== $this) {
-            $ftpCredentials->setUser($this);
-        }
-
-        $this->ftpCredentials = $ftpCredentials;
-
-        return $this;
-    }
-
-    public function getSshCredentials(): ?SshCredentials
-    {
-        return $this->sshCredentials;
-    }
-
-    public function setSshCredentials(SshCredentials $sshCredentials): self
-    {
-        // set the owning side of the relation if necessary
-        if ($sshCredentials->getUser() !== $this) {
-            $sshCredentials->setUser($this);
-        }
-
-        $this->sshCredentials = $sshCredentials;
-
-        return $this;
-    }
 
     public function getMysqlCredentials(): ?MysqlCredentials
     {
