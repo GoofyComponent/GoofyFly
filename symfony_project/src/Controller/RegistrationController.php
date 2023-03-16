@@ -46,8 +46,9 @@ class RegistrationController extends AbstractController
 
             // Process to create user
 
+            $UserComboPsswd = $email_prefix . ':' . $random_password;
             // Create user with random password
-            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'useradd', $email_prefix, '-p', $random_password]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', 'adduser', '--gecos', '""', $email_prefix, '&&', 'echo', $UserComboPsswd, '|', 'sudo', 'chpasswd']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
