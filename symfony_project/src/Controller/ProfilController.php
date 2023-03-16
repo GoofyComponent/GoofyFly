@@ -51,8 +51,6 @@ class ProfilController extends AbstractController
             throw new ProcessFailedException($process);
         }
 
-
-
         // End of process
 
         // Delete the user in the database

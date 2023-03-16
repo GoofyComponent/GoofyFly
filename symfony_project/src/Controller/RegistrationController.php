@@ -47,33 +47,33 @@ class RegistrationController extends AbstractController
             // Process to create user
 
             // Create user with random password
-            $process = new Process(['sudo', 'useradd', $email_prefix, '-p', $random_password]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'useradd', $email_prefix, '-p', $random_password]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
 
             // créer le dossier de l'utilisateur
-            $process = new Process(['sudo', 'mkdir', '/home/' . $email_prefix]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'mkdir', '/home/' . $email_prefix]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
             // changer le propriétaire du dossier de l'utilisateur
-            $process = new Process(['sudo', 'chown', $email_prefix . ':' . $email_prefix, '/home/' . $email_prefix]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'chown', $email_prefix . ':' . $email_prefix, '/home/' . $email_prefix]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
             // changer les droits du dossier de l'utilisateur
-            $process = new Process(['sudo', 'chmod', '700', '/home/' . $email_prefix]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'chmod', '700', '/home/' . $email_prefix]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
 
             //  change default shell folder to /home/user
-            $process = new Process(['sudo', 'usermod', '-d', '/home/' . $email_prefix, $email_prefix]);
+            $process = new Process(['echo', 'hetic2023groupe10AIR!', 'sudo', '-S', 'usermod', '-d', '/home/' . $email_prefix, $email_prefix]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
