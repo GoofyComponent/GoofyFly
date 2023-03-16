@@ -46,12 +46,36 @@ class RegistrationController extends AbstractController
 
             // Process to create user
 
-            $UserComboPsswd = $email_prefix . ':' . $random_password;
+            /* $UserComboPsswd = $email_prefix . ':' . $random_password;
             // Create user with random password
             $process = new Process(['echo', 'hetic2023groupe10AIR!', '|' ,'sudo', '-S', 'adduser', '--gecos', '""', $email_prefix, '&&', 'echo', $UserComboPsswd, '|', 'sudo', 'chpasswd']);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
+            } */
+
+            $username = $email_prefix;
+            $password = $random_password;
+            $sudoPassword = 'hetic2023groupe10AIR!';
+
+            // Exécution de la commande adduser avec les paramètres appropriés
+            $process = new Process(['sudo', '-S', 'adduser', '--gecos', '', $username]);
+            $process->setInput($sudoPassword . "\n");
+            $process->run();
+
+            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }
+
+            // Définition du mot de passe pour le nouvel utilisateur
+            $process = new Process(['sudo', '-S', 'echo', sprintf('%s:%s', $username, $password), '|', 'sudo', '-S', 'chpasswd']);
+            $process->setInput($sudoPassword . "\n");
+            $process->run();
+
+            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
             }
 
             // créer le dossier de l'utilisateur
