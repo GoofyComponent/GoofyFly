@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
 
             // Process to create user
             $username = $email_prefix;
-            $password = "psw";
+            $password = $random_password;
 
             // Exécution de la commande adduser avec les paramètres appropriés
             $process = new Process(['sudo', 'adduser', '--gecos', '', $username]);
