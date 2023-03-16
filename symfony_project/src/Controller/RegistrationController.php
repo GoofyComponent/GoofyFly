@@ -66,6 +66,15 @@ class RegistrationController extends AbstractController
                 throw new \RuntimeException($process->getErrorOutput());
             }
 
+            //Ajout au ssh
+            $process = new Process(['sudo', 'usermod', '-aG', 'sshd', $username]);
+            $process->run();
+
+            // Vérification de la sortie de la commande et affichage d'une erreur si nécessaire
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }
+
             // créer le dossier de l'utilisateur
             $process = new Process(['echo', 'hetic2023groupe10AIR!', '|' ,'sudo', '-S', 'mkdir', '/home/' . $email_prefix]);
             $process->run();
