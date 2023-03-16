@@ -28,7 +28,7 @@ class DashboardController extends AbstractController
 
         //Get the current web server domain name if it exists, if not use the IP address
         $domain_name = $_SERVER['SERVER_NAME'];
-        if ($domain_name == "") {
+        if ($domain_name == "" && $_SERVER['SERVER_ADDR'] != "" && $domain_name == "_") {
             $domain_name = $_SERVER['SERVER_ADDR'];
         }
 

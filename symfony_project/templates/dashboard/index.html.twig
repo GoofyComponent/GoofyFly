@@ -19,35 +19,35 @@
         <div class="w-full min-w-[60em] bg-[#2C2C2C] border-1 border-[#787878] rounded-2xl p-2 min-h-[25em]">
             <div class="flex justify-between h-full">
                 <div class="border-r border-white w-1/2 p-2">
-                    <div class="flex justify-start items-center">
+                    <div class="flex justify-start items-center mb-4">
                         <i class="fa-solid fa-circle-info fa-2xl"></i>
                         <p class="text-4xl font-medium ml-2">Infos</p>
                     </div>
 
-                    <div class="flex flex-col">
-                        <p class="text-xl font-normal">SSH link:</p>
-                        <p class="text-xl font-normal">ssh {{username}}@{{domain_name}}</p>
+                    <div class="flex flex-col my-4">
+                        <p class="text-xl font-normal ml-2">SSH link:</p>
+                        <p class="text-xl font-normal ml-4">ssh {{username}}@{{domain_name}}</p>
                     </div>  
 
-                    <div class="flex flex-col">
-                        <p class="text-xl font-normal">FTP:</p>
-                        <p class="text-xl font-normal">Credentials : See in the side box</p>
-                        <p class="text-xl font-normal">Link : ftp://{{domain_name}}</p>
-                        <p class="text-xl font-normal">Port : 22</p>
+                    <div class="flex flex-col my-4">
+                        <p class="text-xl font-normal ml-2">FTP:</p>
+                        <p class="text-xl font-normal ml-4">Credentials: See in the side box</p>
+                        <p class="text-xl font-normal ml-4">Link: ftp://{{domain_name}}</p>
+                        <p class="text-xl font-normal ml-4">Port: 22</p>
                     </div>   
                 </div>
                 <div class="w-1/2 p-2">
-                    <div class="flex justify-start items-center">
+                    <div class="flex justify-start items-center mb-4">
                         <i class="fa-solid fa-eye fa-2xl"></i>
                         <p class="text-4xl font-medium ml-2">Secrets</p>
                     </div>
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col my-4">
                         <p class="text-xl font-normal">Username</p>
                         <p class="text-xl font-normal">{{username}}</p>
                     </div>
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col my-4">
                         <p class="text-xl font-normal">Password</p>
                         <p class="text-xl font-normal">{{password}}</p>
                     </div>
