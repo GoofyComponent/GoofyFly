@@ -43,7 +43,7 @@ class DashboardController extends AbstractController
             $output = $process->getOutput();
             $parts = explode(' ', $output);
             $bytes = (int) $parts[0];
-            $mbs = round($bytes / (1024 * 1024), 2);
+            $mbs = round($bytes / (1024 * 1024), 1);
             $directory_size = $mbs;
         } else {
             echo $process->getErrorOutput();
