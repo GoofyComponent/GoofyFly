@@ -72,14 +72,14 @@ class DashboardController extends AbstractController
         $backup_directory = "/backups/" . $username . "/folder";
         $backup_directory_files = 0;
 
-        $process = new Process(['ls', '-l', $backup_directory]);
-        $process->run();
+        $processDirNmb = new Process(['ls', '-l', $backup_directory]);
+        $processDirNmb->run();
 
         if ($process->isSuccessful()) {
-            $output = $process->getOutput();
+            $outputDirNmb = $processDirNmb->getOutput();
             $backup_directory_files = substr_count($output, " ");
         } else {
-            echo $process->getErrorOutput();
+            echo $processDirNmb->getErrorOutput();
         }
 
         return $this->render('dashboard/index.html.twig', [
