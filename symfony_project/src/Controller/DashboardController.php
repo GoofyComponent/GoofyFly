@@ -51,15 +51,14 @@ class DashboardController extends AbstractController
             echo $process->getErrorOutput();
         }
 
-        //Get user database size
+        //Get user database size, if it exists, database name is the same as the username
         $database_size = 0;
-        $getDatabaseName = $username;
-        $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'SELECT table_schema3"' . $getDatabaseName . '", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "Data Base Size in MB" FROM information_schema.tables GROUP BY table_schema;']);
+        $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'SELECT table_schema "' . $username . '", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "Data Base Size in MB" FROM information_schema.tables GROUP BY table_schema;']);
         $process->run();
 
         if ($process->isSuccessful()) {
             $outputDB = $process->getOutput();
-            $outputDB = str_replace($getDatabaseName, "", $outputDB);
+            $outputDB = str_replace($username, "", $outputDB);
             $outputDB = str_replace(" ", "", $outputDB);
             $partsDB = explode(' ', $outputDB);
             $bytesDB = (int) $partsDB[0];
