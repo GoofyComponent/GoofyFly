@@ -77,7 +77,7 @@ class DashboardController extends AbstractController
 
         if ($process->isSuccessful()) {
             $outputDirNmb = $processDirNmb->getOutput();
-            $backup_directory_files = substr_count($output, " ");
+            $backup_directory_files = substr_count($outputDirNmb, " ");
         } else {
             echo $processDirNmb->getErrorOutput();
         }
