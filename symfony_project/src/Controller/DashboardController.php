@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Process\Process;
 
 class DashboardController extends AbstractController
 {
@@ -32,11 +33,24 @@ class DashboardController extends AbstractController
             $domain_name = $_SERVER['SERVER_ADDR'];
         }
 
+        //Get user directory size
+        $directory_size = 0;
+        $getDirectoryPath = "\/home\/" . $username;
+        $process = new Process(['du', '-hs', $getDirectoryPath]);
+        $process->run();
+
+        if ($process->isSuccessful()) {
+            $directory_size = $process->getOutput();
+        } else {
+            echo $process->getErrorOutput();
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
             'username' => $username,
             'password' => $password,
             'domain_name' => $domain_name,
+            'directory_size' => $directory_size,
         ]);
     }
 }
