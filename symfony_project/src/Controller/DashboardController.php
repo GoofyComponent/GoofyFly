@@ -71,13 +71,13 @@ class DashboardController extends AbstractController
         //Read the numbers of files in the user backup directory
         $backup_directory = "/backups/" . $username . "/folder";
         $backup_directory_files = 0;
-
-        $processDirNmb = new Process(['ls', '-l', $backup_directory, '|', 'wc', '-l']);
+        
+        $processDirNmb = new Process(['ls', '-l', $backup_directory]);
         $processDirNmb->run();
 
         if ($process->isSuccessful()) {
             $outputDirNmb = $processDirNmb->getOutput();
-            $backup_directory_files = $outputDirNmb;
+            $backup_directory_files = substr_count($outputDirNmb, " ");
         } else {
             echo $processDirNmb->getErrorOutput();
         }
