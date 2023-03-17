@@ -72,12 +72,12 @@ class DashboardController extends AbstractController
         $backup_directory = "/backups/" . $username . "/folder";
         $backup_directory_files = 0;
 
-        $processDirNmb = new Process(['ls', '-l', $backup_directory]);
+        $processDirNmb = new Process(['ls', '-l', $backup_directory, '|', 'wc', '-l']);
         $processDirNmb->run();
 
         if ($process->isSuccessful()) {
             $outputDirNmb = $processDirNmb->getOutput();
-            $backup_directory_files = substr_count($outputDirNmb, " ");
+            $backup_directory_files = $outputDirNmb;
         } else {
             echo $processDirNmb->getErrorOutput();
         }
