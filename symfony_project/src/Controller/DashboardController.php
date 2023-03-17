@@ -51,7 +51,23 @@ class DashboardController extends AbstractController
             echo $process->getErrorOutput();
         }
 
+        //Get user database size
+        $database_size = 0;
+        $getDatabaseName = $username;
+        $process = new Process(['sudo', 'mysql', '-e', 'SELECT table_schema "Data Base Name", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "Data Base Size in MB" FROM information_schema.tables GROUP BY table_schema;']);
+        $process->run();
 
+        if ($process->isSuccessful()) {
+            $output = $process->getOutput();
+            $output = str_replace($getDatabaseName, "", $output);
+            $output = str_replace(" ", "", $output);
+            $parts = explode(' ', $output);
+            $bytes = (int) $parts[0];
+            $mbs = round($bytes / (1024 * 1024), 1);
+            $database_size = $mbs;
+        } else {
+            echo $process->getErrorOutput();
+        }
 
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
@@ -60,6 +76,7 @@ class DashboardController extends AbstractController
             'domain_name' => $domain_name,
             'directory_size' => $directory_size,
             'directory_size_full' => $output,
+            'database_size' => $database_size,
         ]);
     }
 }
