@@ -40,10 +40,16 @@ class DashboardController extends AbstractController
         $process->run();
 
         if ($process->isSuccessful()) {
-            $directory_size = $process->getOutput();
+            $output = $process->getOutput();
+            $parts = explode(' ', $output);
+            $bytes = (int) $parts[0];
+            $mbs = round($bytes / (1024 * 1024), 2);
+            $directory_size = $mbs;
         } else {
             echo $process->getErrorOutput();
         }
+
+
 
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
