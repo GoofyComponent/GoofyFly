@@ -59,12 +59,19 @@ class DashboardController extends AbstractController
 
         if ($process->isSuccessful()) {
             $outputDB = $process->getOutput();
+            echo $outputDB;
             $outputDB = str_replace($getDatabaseName, "", $outputDB);
+            echo $outputDB;
             $outputDB = str_replace(" ", "", $outputDB);
+            echo $outputDB;
             $partsDB = explode(' ', $outputDB);
+            echo $partsDB;
             $bytesDB = (int) $partsDB[0];
+            echo $bytesDB;
             $mbsDB = round($bytesDB / (1024 * 1024), 1);
+            echo $mbsDB;
             $database_size = $mbsDB;
+            echo $database_size;
         } else {
             echo $process->getErrorOutput();
         }
