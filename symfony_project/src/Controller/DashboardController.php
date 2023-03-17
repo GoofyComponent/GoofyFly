@@ -41,6 +41,7 @@ class DashboardController extends AbstractController
 
         if ($process->isSuccessful()) {
             $output = $process->getOutput();
+            $output = str_replace($getDirectoryPath, "", $output);
             $parts = explode(' ', $output);
             $bytes = (int) $parts[0];
             $mbs = round($bytes / (1024 * 1024), 1);
