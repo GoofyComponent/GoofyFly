@@ -35,7 +35,7 @@ class DashboardController extends AbstractController
 
         //Get user directory size
         $directory_size = 0;
-        $getDirectoryPath = "\/home\/" . $username;
+        $getDirectoryPath = "/home/" . $username;
         $process = new Process(['du', '-hs', $getDirectoryPath]);
         $process->run();
 
