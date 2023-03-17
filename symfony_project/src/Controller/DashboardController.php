@@ -54,7 +54,7 @@ class DashboardController extends AbstractController
         //Get user database size
         $database_size = 0;
         $getDatabaseName = $username;
-        $process = new Process(['sudo', 'mysql', '-e', 'SELECT table_schema "Data Base Name", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "Data Base Size in MB" FROM information_schema.tables GROUP BY table_schema;']);
+        $process = new Process(['mysql', '-u', 'root', '-p' . 'password', '-h', 'localhost', '-e', 'SELECT table_schema "Data Base Name", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "Data Base Size in MB" FROM information_schema.tables GROUP BY table_schema;']);
         $process->run();
 
         if ($process->isSuccessful()) {
