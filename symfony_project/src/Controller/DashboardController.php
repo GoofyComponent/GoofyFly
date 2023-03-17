@@ -57,6 +57,7 @@ class DashboardController extends AbstractController
             'password' => $password,
             'domain_name' => $domain_name,
             'directory_size' => $directory_size,
+            'directory_size_full' => $output,
         ]);
     }
 }
