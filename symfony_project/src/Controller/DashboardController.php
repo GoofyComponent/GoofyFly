@@ -68,6 +68,20 @@ class DashboardController extends AbstractController
             echo $process->getErrorOutput();
         }
 
+        //Read the numbers of files in the user backup directory
+        $backup_directory = "/backups/" . $username . "/folder";
+        $backup_directory_files = 0;
+
+        $process = new Process(['ls', '-l', $backup_directory]);
+        $process->run();
+
+        if ($process->isSuccessful()) {
+            $output = $process->getOutput();
+            $backup_directory_files = substr_count($output, " ");
+        } else {
+            echo $process->getErrorOutput();
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
             'username' => $username,
@@ -76,6 +90,7 @@ class DashboardController extends AbstractController
             'directory_size' => $directory_size,
             'directory_size_full' => $output,
             'database_size' => $database_size,
+            'backup_directory_files' => $backup_directory_files,
         ]);
     }
 }
