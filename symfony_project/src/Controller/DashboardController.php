@@ -58,13 +58,13 @@ class DashboardController extends AbstractController
         $process->run();
 
         if ($process->isSuccessful()) {
-            $output = $process->getOutput();
-            $output = str_replace($getDatabaseName, "", $output);
-            $output = str_replace(" ", "", $output);
-            $parts = explode(' ', $output);
-            $bytes = (int) $parts[0];
-            $mbs = round($bytes / (1024 * 1024), 1);
-            $database_size = $mbs;
+            $outputDB = $process->getOutput();
+            $outputDB = str_replace($getDatabaseName, "", $outputDB);
+            $outputDB = str_replace(" ", "", $outputDB);
+            $partsDB = explode(' ', $outputDB);
+            $bytesDB = (int) $partsDB[0];
+            $mbsDB = round($bytesDB / (1024 * 1024), 1);
+            $database_size = $mbsDB;
         } else {
             echo $process->getErrorOutput();
         }
